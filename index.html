@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BINGO ET</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="assets/bingo-et-icon-192.png" />
+  <meta name="theme-color" content="#0066ff" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="theme-dark">
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-card">
+      <img src="assets/bingo-et-icon.png" alt="BINGO ET" class="app-pic-splash" />
+      <p class="splash-caption">BINGO ET</p>
+    </div>
+  </div>
+
+  <section id="login-view" class="auth-screen hidden">
+    <div class="auth-header">
+      <div class="lang-dropdown-wrap">
+        <button id="auth-lang-btn" class="pill-btn" type="button">🌐 አማርኛ ▾</button>
+      </div>
+      <img src="assets/bingo-et-icon.png" alt="BINGO ET" class="app-pic-auth" />
+      <div class="bingo-balls">
+        <span class="ball b-ball">B</span>
+        <span class="ball i-ball">I</span>
+        <span class="ball n-ball">N</span>
+        <span class="ball g-ball">G</span>
+        <span class="ball o-ball">O</span>
+      </div>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button id="tab-login" class="auth-tab active" type="button" data-i18n="login_tab">ይግቡ</button>
+        <button id="tab-register" class="auth-tab" type="button" data-i18n="register_tab">መለያ ይክፈቱ</button>
+      </div>
+
+      <h2 id="auth-heading" data-i18n="welcome_back">እንኳን ደህና መጡ</h2>
+      <p id="auth-subtitle" class="muted" data-i18n="enter_info">ለመግባት መረጃዎን ያስገቡ</p>
+
+      <form id="auth-form">
+        <label class="field-label" for="phone-input" data-i18n="phone_label">ስልክ ቁጥር</label>
+        <div class="input-box">
+          <span class="input-icon">📱</span>
+          <input id="phone-input" type="tel" placeholder="0912341486" value="0912341486" required />
+        </div>
+
+        <label class="field-label" for="password-input" data-i18n="password_label">የይለፍ ቃል</label>
+        <div class="input-box">
+          <span class="input-icon">🔒</span>
+          <input id="password-input" type="password" placeholder="••••••••" value="123456" required />
+          <button id="toggle-pass-btn" class="icon-btn" type="button" aria-label="Toggle password">👁️</button>
+        </div>
+
+        <div class="auth-actions-row">
+          <button id="forgot-pass-btn" class="link-btn" type="button" data-i18n="forgot_password">የይለፍ ቃል ረሱት?</button>
+        </div>
+
+        <button type="submit" class="primary-btn full-width" id="auth-submit-btn">
+          → <span data-i18n="login_btn">ይግቡ</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <div id="main-app" class="app-shell">
+    <header class="top-mini-header">
+      <div class="header-left">
+        <button id="menu-drawer-btn" class="icon-btn header-icon" type="button" title="Menu">☰</button>
+        <img src="assets/bingo-et-icon-192.png" alt="BINGO ET" class="header-app-pic" />
+        <div class="header-titles">
+          <span class="mini-label">Mini app</span>
+          <h1 class="app-brand-title">BINGO ET</h1>
+        </div>
+      </div>
+      <div class="header-right">
+        <button id="btn-install-app" class="chip-btn install-chip" type="button" data-i18n="install_app">Install</button>
+        <button id="btn-rules-top" class="chip-btn" type="button" data-i18n="rules">ህጎች</button>
+        <button id="btn-refresh-top" class="chip-btn blue-chip" type="button" data-i18n="refresh">አድስ</button>
+        <button id="btn-exit-top" class="chip-btn" type="button" data-i18n="exit">ውጣ</button>
+      </div>
+    </header>
+
+    <section class="status-section">
+      <div class="status-grid-4">
+        <div class="info-tile">
+          <span class="tile-label" data-i18n="game_round">ጨዋታ</span>
+          <strong class="tile-val" id="round-number">#352443</strong>
+        </div>
+        <div class="info-tile">
+          <span class="tile-label" data-i18n="stake">ዋጋ</span>
+          <strong class="tile-val" id="stake-display">10 ETB</strong>
+        </div>
+        <div class="info-tile">
+          <span class="tile-label" data-i18n="status">ሁኔታ</span>
+          <strong class="tile-val status-badge" id="game-status-text">በመጠባበቅ ...</strong>
+        </div>
+        <div class="info-tile account-tile" id="open-account-btn">
+          <span class="tile-label" data-i18n="account">ሒሳብ</span>
+          <strong class="tile-val accent-green" id="balance-display">6.00 ETB</strong>
+          <small class="masked-phone" id="masked-phone-display">0912**1486</small>
+        </div>
+      </div>
+
+      <div class="payout-lang-row">
+        <div class="payout-box">
+          <span data-i18n="payout_label">ሽልማት:</span>
+          <strong id="payout-birr-display" class="payout-amount">0.00 ETB</strong>
+        </div>
+        <div class="lang-switch-group" role="group" aria-label="Language switcher">
+          <button type="button" class="lang-pill active" data-lang="am">አማ</button>
+          <button type="button" class="lang-pill" data-lang="ti">ትግ</button>
+          <button type="button" class="lang-pill" data-lang="en">EN</button>
+        </div>
+      </div>
+
+      <div class="countdown-strip">
+        <div class="countdown-pill">
+          <span data-i18n="next_game_in">ጨዋታ ሊጀመር</span>
+          <strong id="countdown-clock" class="countdown-time">2 min (02:00)</strong>
+        </div>
+        <div class="selection-summary">
+          <span data-i18n="selected_bingo">የተመረጠ ቢንጎ:</span>
+          <strong id="selected-bingo-pill" class="selected-badge">—</strong>
+        </div>
+      </div>
+    </section>
+
+    <main id="selector-view" class="content-area">
+      <div class="selector-toolbar">
+        <div class="selector-title-group">
+          <h2 class="section-heading" data-i18n="select_number_600">የቢንጎ ቁጥር ይምረጡ (1 – 600)</h2>
+          <span class="range-hint" id="range-page-info">1 - 150</span>
+        </div>
+        <div class="jump-controls">
+          <input
+            type="number"
+            id="jump-number-input"
+            min="1"
+            max="600"
+            placeholder="1–600"
+            aria-label="Jump to number 1 to 600"
+          />
+          <button type="button" id="jump-number-btn" class="small-action-btn" data-i18n="go">ሂድ</button>
+        </div>
+      </div>
+
+      <div class="range-tabs" id="range-tabs">
+        <button type="button" class="range-tab active" data-start="1" data-end="150">1–150</button>
+        <button type="button" class="range-tab" data-start="151" data-end="300">151–300</button>
+        <button type="button" class="range-tab" data-start="301" data-end="450">301–450</button>
+        <button type="button" class="range-tab" data-start="451" data-end="600">451–600</button>
+        <button type="button" class="range-tab" data-start="1" data-end="600" data-i18n="all_600">ሁሉም (600)</button>
+      </div>
+
+      <div id="number-grid-600" class="number-grid-600"></div>
+
+      <div class="bottom-action-bar">
+        <button type="button" id="btn-start-draw" class="primary-btn full-width" data-i18n="join_or_watch">
+          ቢንጎ ይምረጡ / ጨዋታ ይጀምሩ
+        </button>
+      </div>
+    </main>
+
+    <section id="draw-view" class="content-area hidden">
+      <div class="live-stats-row">
+        <div class="mini-stat-card">
+          <span data-i18n="card_label">ካርቴላ</span>
+          <strong id="live-card-num">#64</strong>
+        </div>
+        <div class="mini-stat-card green-border">
+          <span data-i18n="prize_label">ሽልማት</span>
+          <strong id="live-prize-birr">512.00 ETB</strong>
+        </div>
+        <div class="mini-stat-card">
+          <span data-i18n="stake_short">ዋጋ</span>
+          <strong id="live-stake-birr">10 ETB</strong>
+        </div>
+        <button type="button" id="btn-back-selector" class="mini-stat-card action-tile">
+          <span data-i18n="back_to_select">1–600 ምርጫ</span>
+        </button>
+      </div>
+
+      <div class="round-meta-row">
+        <span id="draw-round-label">Round ID: 352443</span>
+        <label class="auto-mark-toggle">
+          <span data-i18n="auto_mark">በራሱ ምልክት</span>
+          <input type="checkbox" id="auto-mark-checkbox" checked />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="called-strip-wrap">
+        <div id="recent-called-list" class="recent-called-list"></div>
+        <button type="button" id="toggle-board-btn" class="collapse-btn" title="Toggle board">▲</button>
+      </div>
+
+      <div id="bingo-75-board" class="bingo-board-card">
+        <div class="board-row"><span class="col-letter col-b">B</span><div class="col-cells" data-col="B"></div></div>
+        <div class="board-row"><span class="col-letter col-i">I</span><div class="col-cells" data-col="I"></div></div>
+        <div class="board-row"><span class="col-letter col-n">N</span><div class="col-cells" data-col="N"></div></div>
+        <div class="board-row"><span class="col-letter col-g">G</span><div class="col-cells" data-col="G"></div></div>
+        <div class="board-row"><span class="col-letter col-o">O</span><div class="col-cells" data-col="O"></div></div>
+      </div>
+
+      <button type="button" id="btn-claim-bingo" class="claim-bingo-btn" data-i18n="claim_bingo">
+        ቢንጎ! (BINGO)
+      </button>
+
+      <div class="spectator-card">
+        <h3 id="spectator-title" data-i18n="spectator_title">እየተመለከቱ ነው</h3>
+        <p id="spectator-desc" data-i18n="spectator_desc">
+          አሁን ጨዋታ በመካሄድ ላይ ነው። በሚቀጥለው ዙር መቀላቀል ይችላሉ።
+        </p>
+      </div>
+    </section>
+
+    <section id="winner-view" class="content-area hidden">
+      <div class="winner-card">
+        <div class="crown-icon">👑</div>
+        <h2 class="winner-banner-word" data-i18n="bingo_word">ቢንጎ</h2>
+        <span class="winner-tag" data-i18n="winner_badge">አሸናፊ</span>
+        <div class="winner-phone" id="winner-phone">0925**7220</div>
+        <div class="winner-card-ref" id="winner-card-ref">Bingo #89</div>
+        <div class="winner-payout-birr" id="winner-payout-birr">512.00 ETB</div>
+
+        <div id="winner-mini-grid" class="winner-mini-grid"></div>
+
+        <button type="button" id="btn-play-again" class="green-btn full-width" data-i18n="play_again">
+          እንደገና ተጫወት
+        </button>
+        <p id="next-round-auto-note" class="muted small-note">
+          አዲስ ጨዋታ በ 2 ደቂቃ ይጀምራል...
+        </p>
+      </div>
+    </section>
+
+    <aside id="account-drawer" class="account-drawer hidden">
+      <div class="drawer-backdrop" id="close-account-backdrop"></div>
+      <div class="drawer-panel">
+        <div class="drawer-top">
+          <div class="drawer-brand">
+            <img src="assets/bingo-et-icon-192.png" alt="BINGO ET" class="drawer-app-pic" />
+            <span class="mini-badge">BINGO ET</span>
+            <strong id="drawer-phone">0912341486</strong>
+          </div>
+          <button type="button" id="close-account-btn" class="icon-btn">✕</button>
+        </div>
+
+        <div class="wallet-hero-card">
+          <div class="wallet-avatar">86</div>
+          <div class="wallet-balances">
+            <div class="main-bal" id="drawer-total-balance">6.00 ETB</div>
+            <div class="sub-bal-label" data-i18n="total_balance">ጠቅላላ</div>
+          </div>
+          <div class="withdrawable-box">
+            <strong id="drawer-withdrawable">6.00</strong>
+            <span data-i18n="withdrawable">ሊወጣ የሚችል</span>
+          </div>
+          <button type="button" id="sync-wallet-btn" class="refresh-circle-btn" title="Sync">↻</button>
+        </div>
+
+        <div class="quick-actions-4">
+          <button type="button" class="qa-btn" data-action="deposit">
+            <span class="qa-icon blue-bg">↙</span>
+            <span data-i18n="deposit">ማስገባት</span>
+          </button>
+          <button type="button" class="qa-btn" data-action="withdraw">
+            <span class="qa-icon pink-bg">↗</span>
+            <span data-i18n="withdraw">ማውጣት</span>
+          </button>
+          <button type="button" class="qa-btn" data-action="tx_history">
+            <span class="qa-icon teal-bg">🧾</span>
+            <span data-i18n="tx_history">የግብይት ታሪክ</span>
+          </button>
+          <button type="button" class="qa-btn" data-action="game_history">
+            <span class="qa-icon orange-bg">🎮</span>
+            <span data-i18n="game_history">የጨዋታ ታሪክ</span>
+          </button>
+        </div>
+
+        <div id="wallet-action-box" class="wallet-subpanel">
+          <h4 id="wallet-panel-title">Wallet Activity</h4>
+          <div id="wallet-amount-controls" class="wallet-amount-row hidden">
+            <input type="number" id="wallet-amount-input" min="1" step="1" placeholder="Amount (ETB)" value="50" />
+            <button type="button" id="wallet-confirm-btn" class="small-action-btn">Confirm</button>
+          </div>
+          <ul id="wallet-history-list" class="wallet-history-list"></ul>
+        </div>
+
+        <div class="settings-card">
+          <h4 data-i18n="settings">ሴቲንግ</h4>
+          <div class="setting-row">
+            <span data-i18n="theme">ገጽታ</span>
+            <div class="seg-toggle">
+              <button type="button" id="theme-light-btn" class="seg-btn">☀️ ብርሃን</button>
+              <button type="button" id="theme-dark-btn" class="seg-btn active">🌙 ጨለማ</button>
+            </div>
+          </div>
+          <div class="setting-row">
+            <span data-i18n="sound">ድምጽ</span>
+            <input type="checkbox" id="sound-toggle" checked />
+          </div>
+          <div class="setting-row">
+            <span data-i18n="language">ቋንቋ</span>
+            <select id="drawer-lang-select">
+              <option value="am">አማርኛ</option>
+              <option value="ti">ትግርኛ</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <span data-i18n="notifications">Notifications</span>
+            <span class="muted small-note" data-i18n="notif_desc">ካርቴላ ካስመዘገብኩኝ ብቻ</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div id="rules-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 data-i18n="game_rules">የጨዋታ ህጎች</h2>
+          <button type="button" id="close-rules-btn" class="icon-btn">✕</button>
+        </div>
+
+        <div class="rules-lang-tabs">
+          <button type="button" class="rules-tab" data-rlang="en">English</button>
+          <button type="button" class="rules-tab active" data-rlang="am">Amharic</button>
+          <button type="button" class="rules-tab" data-rlang="ti">Tigrigna</button>
+        </div>
+
+        <ol id="rules-list" class="rules-list"></ol>
+
+        <button type="button" id="accept-rules-btn" class="primary-btn full-width" data-i18n="enter_btn">
+          ገባኝ
+        </button>
+      </div>
+    </div>
+
+    <div id="toast-banner" class="toast-banner hidden"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
